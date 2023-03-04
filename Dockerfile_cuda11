@@ -17,11 +17,9 @@ make install && \
 apt-get autoremove && apt-get autoclean && \
 echo "export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
 
-ENV LD_LIBRARY_PATH $HOME/lib:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
 
 RUN git clone -b sars-cov-2-origins https://github.com/beast-dev/beast-mcmc.git && \
 cd beast-mcmc && \
 ant
-
-RUN echo 'alias beast="java -jar /root/beast-mcmc/build/dist/beast.jar"' >> ~/.bashrc
