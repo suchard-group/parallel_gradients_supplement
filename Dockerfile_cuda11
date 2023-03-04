@@ -1,0 +1,27 @@
+# The cuda version must match the version installed on host system
+FROM nvidia/cuda:11.6.0-devel-ubuntu18.04
+WORKDIR /root/
+
+RUN apt-get update -qq
+RUN apt-get install -qq -y wget build-essential autoconf automake libtool git pkg-config openjdk-11-jdk vim ant cmake
+
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
+
+RUN git clone -b hmc-clock https://github.com/beagle-dev/beagle-lib.git && \
+cd beagle-lib &&\
+git checkout 31b4d9ef2b08f8af187f985f3a10e2844ff7d775 && \
+mkdir build && \
+cd build && \
+cmake -DBUILD_OPENCL=OFF -DBEAGLE_BENCHMARK=ON -DBEAGLE_DEBUG_SYNCH=ON .. && \
+make install && \
+apt-get autoremove && apt-get autoclean && \
+echo "export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc
+
+ENV LD_LIBRARY_PATH $HOME/lib:$LD_LIBRARY_PATH
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
+
+RUN git clone -b sars-cov-2-origins https://github.com/beast-dev/beast-mcmc.git && \
+cd beast-mcmc && \
+ant
+
+RUN echo 'alias beast="java -jar /root/beast-mcmc/build/dist/beast.jar"' >> ~/.bashrc
