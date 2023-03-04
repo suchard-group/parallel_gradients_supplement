@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7697475.svg)](https://doi.org/10.5281/zenodo.7697475)
+
 # Many-core algorithms for high-dimensional gradients on phylogenetic trees
 This repository contains the scripts and XML files required to reproduce the analyses performed in the "Many-core algorithms for high-dimensional gradients on phylogenetic trees" paper by Gangavarapu et al.
 
